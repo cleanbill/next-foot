@@ -105,7 +105,7 @@ export default class EventList extends Component<
           }
           .display-grid {
             display: grid;
-            grid-template-columns: 2fr 10fr;
+            grid-template-columns: 4fr 8fr;
             height: 30px;
             margin-right: 100px;
           }

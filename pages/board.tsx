@@ -21,7 +21,7 @@ function Board() {
     setTime(game.timeDisplay);
   };
   return (
-    <div className="container">
+    <div className="container min-h-screen bg-color-green absolute">
       <h1>Footswell</h1>
 
       <div className="score">
