@@ -153,7 +153,7 @@ function Match() {
 
   return (
     <span>
-      <div className="min-h-screen bg-green-600 text-center absolute">
+      <div className="min-h-screen bg-green-600 text-center w-full absolute">
         <main>
           <div className="text-1xl font-bold ">- FOOTSWELL -</div>
           <div className="teams">
