@@ -40,12 +40,6 @@ function Board() {
       <EventList disableUndo eventList={events} />
 
       <style jsx>{`
-        button {
-          padding: 10px;
-          border-radius: 10px;
-          text-align: center;
-          width: 100%;
-        }
         h1 {
           text-align: center;
         }
@@ -73,6 +67,21 @@ function Board() {
           align-items: center;
           background-color: green;
           width: 100%;
+        }
+        @media (min-width: 1536px) .container {
+          max-width: unset;
+        }
+        @media (min-width: 1280px) .container {
+          max-width: unset;
+        }
+        @media (min-width: 1024px) .container {
+          max-width: unset;
+        }
+        @media (min-width: 768px) .container {
+          max-width: unset;
+        }
+        @media (min-width: 640px) .container {
+          max-width: unset;
         }
       `}</style>
     </div>
