@@ -153,9 +153,9 @@ function Match() {
 
   return (
     <span>
-      <div className="container">
+      <div className="min-h-screen bg-green-600 text-center absolute">
         <main>
-          <h1 className="title">Footswell</h1>
+          <div className="text-1xl font-bold ">- FOOTSWELL -</div>
           <div className="teams">
             <button
               className="h-10 px-6 font-semibold rounded-md bg-white text-black"
@@ -172,13 +172,17 @@ function Match() {
             >
               {opponentName}
             </button>
-            <div className="score">{score.goals}</div>
-            <div>vrs</div>
-            <div className="score">{score.opponentGoals}</div>
+            <div className="text-5xl">{score.goals}</div>
+            <div className="text-1xl">vrs</div>
+            <div className="text-5xl">{score.opponentGoals}</div>
           </div>
-          <h2 className="mess">{message}</h2>
+          {message && (
+            <h2 className="text-5xl text-orange-700 bg-orange-200 m-3 rounded-md p-3">
+              {message}
+            </h2>
+          )}
           <button
-            className="h-10 px-6 font-semibold rounded-md bg-white text-black"
+            className="h-10 px-6 w-4/5 font-semibold rounded-md bg-white text-black"
             onClick={whistle}
           >
             Whistle Blown
@@ -188,38 +192,6 @@ function Match() {
         </main>
       </div>
       <style jsx>{`
-        body {
-          background-color: #1f911f;
-          text-align: -webkit-center;
-        }
-        button {
-          padding: 10px;
-          border-radius: 10px;
-          text-align: center;
-          width: 100%;
-        }
-        h1 {
-          text-align: center;
-        }
-        h2 {
-          text-align: center;
-        }
-        .score {
-          font-size: 43px;
-          margin-top: 10px;
-        }
-        .mess {
-          color: red;
-          background-color: orange;
-        }
-        .container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-color: green;
-          height: 100%;
-        }
         .teams {
           display: grid;
           grid-template-columns: auto auto auto;

@@ -21,67 +21,56 @@ function Board() {
     setTime(game.timeDisplay);
   };
   return (
-    <div className="container min-h-screen bg-color-green absolute">
-      <h1>Footswell</h1>
+    <div className="min-h-screen color text-amber-50 bg-green-600 text-center">
+      <div className="relative px-6 pt-10 top-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-lg sm:mx-auto sm:rounded-lg sm:px-10">
+        {message && (
+          <h2 className="top-10 text-5xl ml-3 mr-3 text-orange-700 bg-orange-200  rounded-md p-3">
+            {message}
+          </h2>
+        )}
+        <div className="max-w-md mx-auto">
+          <div className="divide-y divide-gray-300/50">
+            <div className="py-8 text-base leading-7 space-y-6 text-gray-600">
+              <p>
+                <div className="score">
+                  <div>{teamName}</div>
+                  <div
+                    className="bg-green-600
+                   rounded-md text-white"
+                  >
+                    {time}
+                  </div>
+                  <div>{opponentName}</div>
 
-      <div className="score">
-        <div>{teamName}</div>
-        <div>{time}</div>
-        <div>{opponentName}</div>
-
-        <div>{goals}</div>
-        <div>vrs</div>
-        <div>{opponentGoal}</div>
+                  <div className="m-10">{goals}</div>
+                  <div className="m-10">vrs</div>
+                  <div className="m-10">{opponentGoal}</div>
+                </div>
+              </p>
+              <EventList disableUndo eventList={events} />
+            </div>
+            <div className="pt-8 text-base leading-7 font-semibold">
+              <p>
+                <a
+                  href="https://github.com/cleanbill/next-foot"
+                  className="text-sky-500 hover:text-sky-600"
+                >
+                  Footswell &rarr;
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="mess">{message}</div>
-
       <GameChanger onGameChanged={(game: StateOfTheGame) => updated(game)} />
-      <EventList disableUndo eventList={events} />
 
       <style jsx>{`
-        h1 {
-          text-align: center;
-        }
         .score {
           display: grid;
           grid-template-columns: auto auto auto;
           text-align: center;
           width: 100%;
           font-size: 30px;
-        }
-        .mess {
-          color: red;
-          background-color: orange;
-          width: 100%;
-          font-size: 30px;
-          text-align: center;
-          margin: 10px;
-        }
-        .container {
-          color: #ede8df;
-          display: flex;
-          height: 100%;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-color: green;
-          width: 100%;
-        }
-        @media (min-width: 1536px) .container {
-          max-width: unset;
-        }
-        @media (min-width: 1280px) .container {
-          max-width: unset;
-        }
-        @media (min-width: 1024px) .container {
-          max-width: unset;
-        }
-        @media (min-width: 768px) .container {
-          max-width: unset;
-        }
-        @media (min-width: 640px) .container {
-          max-width: unset;
         }
       `}</style>
     </div>

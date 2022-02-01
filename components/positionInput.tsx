@@ -12,6 +12,7 @@ export default class PositionSwapper extends Component {
           (localPosition, index) =>
             (!localPosition.gap && (
               <input
+                className="h-16 m-1 rounded-md  w-full"
                 onChange={() => this.props.posChange(index, event)}
                 key={index}
                 defaultValue={localPosition.value}
@@ -20,17 +21,12 @@ export default class PositionSwapper extends Component {
         )}
 
         <style jsx>{`
-          input {
-            height: 34px;
-            height: 34px;
-            width: 99%;
-          }
           .grid {
             display: grid;
             grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
             justify-content: center;
             width: 100%;
-            grid-gap: 16px;
+            grid-gap: 3px;
             margin-top: 10px;
           }
         `}</style>

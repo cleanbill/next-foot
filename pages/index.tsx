@@ -36,6 +36,7 @@ export default function PositionSelector() {
   const [where, setWhere] = useState("HOME");
   const [teamName, setTeamName] = useState("Flaming Jaguar");
   const [opponentName, setOpponentName] = useState("World");
+  const [mode, setMode] = useState("Edit");
 
   useEffect(() => {
     establish("pos", allPositions, setPositionValues);
@@ -55,9 +56,17 @@ export default function PositionSelector() {
   };
 
   const swapper = (index: number) => {
-    const selected = positions.findIndex((pos) => pos.cls == "selected");
+    const selected = positions.findIndex(
+      (pos) => pos.cls == " bg-cyan-400 text-white"
+    );
     if (selected == -1) {
-      updatePos([{ index, value: positions[index].value, cls: "selected" }]);
+      updatePos([
+        {
+          index,
+          value: positions[index].value,
+          cls: " bg-cyan-400 text-white",
+        },
+      ]);
       return;
     }
     const value = positions[index].value;
@@ -86,6 +95,7 @@ export default function PositionSelector() {
 
   const edit = () => {
     setInputMode(!inputMode);
+    setMode(inputMode ? "EDIT" : "MOVE");
   };
 
   const posChange = (index: number, event: Event) => {
@@ -100,7 +110,7 @@ export default function PositionSelector() {
   };
 
   return (
-    <div className="container">
+    <div className="min-h-screen bg-green-600 text-center absolute">
       <Head>
         <title>Footswell</title>
         <link rel="icon" href="/favicon.ico" />
@@ -110,14 +120,15 @@ export default function PositionSelector() {
         <div className="text-3xl font-bold underline">Footswell</div>
         <button
           onClick={swapWhere}
-          className="where font-semibold rounded-md bg-white text-black"
+          className="text-xl min-w-max m-7 w-4/5 font-semibold rounded-md bg-white text-black"
         >
           {where}
         </button>
 
-        <div className="teams">
+        <div className="grid">
           <input
             type="text"
+            className="rounded-md w-4/5 justify-self-center h-10"
             defaultValue={teamName}
             placeholder="Team Name"
             onChange={() => nameChange("teamName", event, setTeamName)}
@@ -125,6 +136,7 @@ export default function PositionSelector() {
           <div>Vrs</div>
           <input
             type="text"
+            className="rounded-md w-4/5 justify-self-center h-10"
             defaultValue={opponentName}
             placeholder="Opponent Name"
             onChange={() => nameChange("opponentName", event, setOpponentName)}
@@ -134,16 +146,16 @@ export default function PositionSelector() {
         <div className="actions">
           <button
             onClick={edit}
-            className="h-10 px-6 font-semibold rounded-md bg-white text-black"
+            className="h-10 px-6 m-4 font-semibold rounded-md bg-white text-black"
           >
-            Edit
+            {mode}
           </button>
 
           <span></span>
 
           <button
             onClick={kickoff}
-            className="h-10 px-6 font-semibold rounded-md bg-white text-black"
+            className="h-10 px-6 m-4 font-semibold rounded-md bg-white text-black"
           >
             Kickoff
           </button>
@@ -157,208 +169,13 @@ export default function PositionSelector() {
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://github.com/cleanbill/next-foot"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by <img src="/vercel.svg" alt="Vercel" className="logo" />
+          Next-Foot
         </a>
       </footer>
-
-      <style jsx>{`
-        .teams {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          text-align: center;
-          height: 60px;
-        }
-
-        input {
-          border-radius: 10px;
-          height: 90%;
-          width: 90%;
-          object-position: center;
-          margin-left: 5%;
-        }
-
-        .actions {
-          display: grid;
-          grid-template-columns: auto auto auto;
-          grid-gap: 5px;
-          text-align: center;
-          width: 60%;
-          margin: 5px;
-          height: 40px;
-        }
-        .action {
-          border-radius: 10px;
-        }
-
-        main {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .where {
-          width: 50%;
-          height: 42px;
-          margin-left: 25%;
-          font-size: 24px;
-          appearance: auto;
-          text-align: center;
-          align-items: flex-start;
-          cursor: default;
-          box-sizing: border-box;
-          background-color: -internal-light-dark(
-            rgb(239, 239, 239),
-            rgb(59, 59, 59)
-          );
-          margin: 0em;
-          margin-bottom: 10px;
-          padding: 1px 6px;
-          border-width: 2px;
-          border-style: outset;
-          border-color: -internal-light-dark(
-            rgb(118, 118, 118),
-            rgb(133, 133, 133)
-          );
-          border-image: initial;
-          text-align: -webkit-center;
-        }
-
-        .logo {
-          height: 1em;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        body {
-          padding: 0;
-          margin: 0;
-          background-color: green;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        html {
-          background-color: #1f911f;
-          text-align: -webkit-center;
-        }
-
-        .container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-color: green;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: auto auto auto auto auto;
-        }
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-
-        .card {
-          margin: 3px;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   );
 }

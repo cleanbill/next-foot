@@ -63,9 +63,17 @@ export default function PositionSelector() {
   };
 
   const swapper = (index: number) => {
-    const selected = positions.findIndex((pos) => pos.cls == "selected");
+    const selected = positions.findIndex(
+      (pos) => pos.cls == " bg-cyan-400 text-white"
+    );
     if (selected == -1) {
-      updatePos([{ index, value: positions[index].value, cls: "selected" }]);
+      updatePos([
+        {
+          index,
+          value: positions[index].value,
+          cls: " bg-cyan-400 text-white",
+        },
+      ]);
       return;
     }
     const value = positions[index].value;
@@ -113,27 +121,18 @@ export default function PositionSelector() {
     router.push("match");
   };
 
-  // const publish = () => {};
-
-  //                <button onClick={publish} className="action">
-  //Publish
-  //</button>
-
   return (
-    <div className="container">
-      <Head>
-        <title>Footswell</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <div className="min-h-screen bg-green-600 text-center absolute w-full">
       <main>
-        <button onClick={finalWhistle} className="where">
+        <button
+          onClick={finalWhistle}
+          className="text-xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
+        >
           Final Whistle
         </button>
-        <h1 className="title">Footswell</h1>
         <button
           onClick={swapWhere}
-          className="where font-semibold rounded-md bg-white text-black"
+          className="text-xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
         >
           {where}
         </button>
@@ -142,29 +141,29 @@ export default function PositionSelector() {
           <div>{teamName}</div>
           <span>{time}</span>
           <div>{opponentName}</div>
-          <div className="score">{score.goals}</div>
+          <div>{score.goals}</div>
           <div>vrs</div>
-          <div className="score">{score.opponentGoals}</div>
+          <div>{score.opponentGoals}</div>
         </div>
 
         <div className="actions">
           <button
             onClick={edit}
-            className="font-semibold rounded-md bg-white text-black"
+            className="self-center font-semibold rounded-md bg-white text-black"
           >
             {editName}
           </button>
 
           <button
             onClick={resetTime}
-            className="font-semibold rounded-md bg-white text-black"
+            className="self-center font-semibold rounded-md bg-white text-black"
           >
             Reset time
           </button>
 
           <button
             onClick={kickoff}
-            className="font-semibold rounded-md bg-white text-black"
+            className="self-center font-semibold rounded-md bg-white text-black"
           >
             Carry on
           </button>
@@ -178,11 +177,11 @@ export default function PositionSelector() {
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://github.com/cleanbill/next-foot"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by <img src="/vercel.svg" alt="Vercel" className="logo" />
+          Next-Foot
         </a>
       </footer>
 
@@ -197,188 +196,13 @@ export default function PositionSelector() {
           margin: 10px;
         }
 
-        input {
-          border-radius: 10px;
-          height: 90%;
-          width: 90%;
-          object-position: center;
-          margin-left: 5%;
-        }
-
         .actions {
           display: grid;
           grid-template-columns: auto auto auto;
           grid-gap: 5px;
           text-align: center;
-          width: 90%;
-          margin: 5px;
-          height: 40px;
-        }
-        .action {
-          border-radius: 10px;
-        }
-
-        main {
-          padding: 1px 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
           width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .where {
-          width: 90%;
-          height: 42px;
-          margin-left: 25%;
-          font-size: 30px;
-          appearance: auto;
-          text-align: center;
-          align-items: flex-start;
-          cursor: default;
-          box-sizing: border-box;
-          background-color: -internal-light-dark(
-            rgb(239, 239, 239),
-            rgb(59, 59, 59)
-          );
-          margin: 0em;
-          margin-bottom: 10px;
-          padding: 1px 6px;
-          border-width: 2px;
-          border-radius: 15px;
-          border-style: outset;
-          border-color: -internal-light-dark(
-            rgb(118, 118, 118),
-            rgb(133, 133, 133)
-          );
-          border-image: initial;
-        }
-
-        .logo {
-          height: 1em;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-          background-color: #1f911f;
-          text-align: -webkit-center;
-        }
-
-        .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: auto auto auto auto auto;
-        }
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-
-        .card {
-          margin: 3px;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        * {
-          box-sizing: border-box;
+          height: 40px;
         }
       `}</style>
     </div>

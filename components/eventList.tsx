@@ -102,12 +102,14 @@ export default class EventList extends Component<
           .all {
             height: 100%;
             width: 97%;
+            font-size: 18px;
+            text-align: left;
           }
           .display-grid {
             display: grid;
-            grid-template-columns: 4fr 8fr;
+            grid-template-columns: 5fr 9fr;
             height: 30px;
-            margin-right: 100px;
+            width: 100%;
           }
           .grid {
             display: grid;
