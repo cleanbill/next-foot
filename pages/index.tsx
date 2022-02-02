@@ -117,7 +117,7 @@ export default function PositionSelector() {
       </Head>
 
       <main>
-        <div className="text-3xl font-bold underline">Footswell</div>
+        <div className="text-3xl font-bold">Footswell</div>
         <button
           onClick={swapWhere}
           className="text-xl min-w-max m-7 w-4/5 font-semibold rounded-md bg-white text-black"

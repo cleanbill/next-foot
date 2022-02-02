@@ -15,7 +15,7 @@ export default class Positions extends Component {
                 key={index}
                 onClick={() => this.props.onClick(index)}
                 className={
-                  "h-20 shadow-2xl rounded-md bg-white text-lg font-semibold text-slate-500" +
+                  "h-16 text-1xl shadow-2xl rounded-md bg-white font-semibold text-slate-500" +
                   localPosition.cls
                 }
               >

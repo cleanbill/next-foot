@@ -122,17 +122,17 @@ export default function PositionSelector() {
   };
 
   return (
-    <div className="min-h-screen bg-green-600 text-center absolute w-full">
-      <main>
+    <div className="min-h-screen bg-green-600 text-center absolute">
+      <main className="mb-6">
         <button
           onClick={finalWhistle}
-          className="text-xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
+          className="h-10 text-3xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
         >
           Final Whistle
         </button>
         <button
           onClick={swapWhere}
-          className="text-xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
+          className="h-10 text-3xl min-w-max m-2 w-4/5 font-semibold rounded-md bg-white text-black"
         >
           {where}
         </button>
@@ -149,29 +149,37 @@ export default function PositionSelector() {
         <div className="actions">
           <button
             onClick={edit}
-            className="self-center font-semibold rounded-md bg-white text-black"
+            className="h-20 text-3xl self-center font-semibold rounded-md bg-white text-black"
           >
             {editName}
           </button>
 
           <button
             onClick={resetTime}
-            className="self-center font-semibold rounded-md bg-white text-black"
+            className="h-20 text-3xl self-center font-semibold rounded-md bg-white text-black"
           >
             Reset time
           </button>
 
           <button
             onClick={kickoff}
-            className="self-center font-semibold rounded-md bg-white text-black"
+            className="h-20 text-3xl self-center font-semibold rounded-md bg-white text-black"
           >
             Carry on
           </button>
         </div>
 
-        {!inputMode && <Positions positions={positions} onClick={swapper} />}
+        {!inputMode && (
+          <span>
+            <div className="mb-12"></div>
+            <Positions positions={positions} onClick={swapper} />
+          </span>
+        )}
         {inputMode && (
-          <PositionInput positions={positions} posChange={posChange} />
+          <span>
+            <div className="mb-10"></div>
+            <PositionInput positions={positions} posChange={posChange} />
+          </span>
         )}
       </main>
 

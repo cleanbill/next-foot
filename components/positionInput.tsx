@@ -12,7 +12,7 @@ export default class PositionSwapper extends Component {
           (localPosition, index) =>
             (!localPosition.gap && (
               <input
-                className="h-16 m-1 rounded-md  w-full"
+                className="h-16 text-1xl bold m-1 rounded-md  w-full"
                 onChange={() => this.props.posChange(index, event)}
                 key={index}
                 defaultValue={localPosition.value}

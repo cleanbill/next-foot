@@ -153,12 +153,12 @@ function Match() {
 
   return (
     <span>
-      <div className="min-h-screen bg-green-600 text-center w-full absolute">
+      <div className="min-h-screen bg-green-600 text-center  absolute">
         <main>
           <div className="text-1xl font-bold ">- FOOTSWELL -</div>
           <div className="teams">
             <button
-              className="h-10 px-6 font-semibold rounded-md bg-white text-black"
+              className="h-12 text-1xl px-6 w-4/5 font-semibold rounded-md bg-white text-black"
               onClick={scored}
             >
               {teamName}
@@ -167,7 +167,7 @@ function Match() {
               <Clock timeChanged={(time) => updateGame(message, time)} />
             </span>
             <button
-              className="h-10 px-6 font-semibold rounded-md bg-white text-black"
+              className="h-12 text-1xl px-6 w-4/5 font-semibold rounded-md bg-white text-black"
               onClick={oppScored}
             >
               {opponentName}
@@ -182,7 +182,7 @@ function Match() {
             </h2>
           )}
           <button
-            className="h-10 px-6 w-4/5 font-semibold rounded-md bg-white text-black"
+            className="h-15 text-3xl px-6 w-4/5 font-semibold rounded-md bg-white text-black"
             onClick={whistle}
           >
             Whistle Blown
