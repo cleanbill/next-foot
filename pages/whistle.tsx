@@ -122,7 +122,7 @@ export default function PositionSelector() {
   };
 
   return (
-    <div className="min-h-screen bg-green-600 text-center absolute">
+    <div className="min-h-screen w-full bg-green-600 text-center absolute">
       <main className="mb-6">
         <button
           onClick={finalWhistle}
