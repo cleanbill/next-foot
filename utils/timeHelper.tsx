@@ -22,4 +22,4 @@ const getSecondsLeft = () => {
   return secondsIntoGame;
 };
 
-export { timeDisplay, toSecs, getSecondsLeft };
+export { timeDisplay, toSecs, getSecondsLeft, pad };

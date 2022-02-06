@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Positions from "../components/positions";
 import PositionInput from "../components/positionInput";
 import { establish } from "../utils/stateHelper";
-import { getSecondsLeft, timeDisplay } from "../utils/timeHelper";
+import { getSecondsLeft, pad, timeDisplay } from "../utils/timeHelper";
 
 export type Change = {
   index: number;
@@ -97,7 +97,58 @@ export default function PositionSelector() {
     setInputMode(!inputMode);
   };
 
+  const saveScore = () => {
+    const now = new Date();
+    const key =
+      "MATCH-" +
+      now.getFullYear() +
+      "-" +
+      pad(now.getMonth() + 1) +
+      "-" +
+      pad(now.getDate()) +
+      "-" +
+      now.getTime();
+
+    const eventsString = localStorage.getItem("eventList");
+    let events = [];
+    try {
+      events = JSON.parse(eventsString);
+    } catch (er) {}
+
+    const positionsString = localStorage.getItem("pos");
+    let positions = {};
+    try {
+      positions = JSON.parse(positionsString);
+    } catch (er) {}
+
+    const scoreString = localStorage.getItem("score");
+    let score = {};
+    try {
+      score = JSON.parse(scoreString);
+    } catch (er) {}
+
+    const teamName = localStorage.getItem("teamName");
+    const opponentName = localStorage.getItem("opponentName");
+    const startedAt = localStorage.getItem("started-at");
+    const secondsIn = localStorage.getItem("started-in");
+    const where = localStorage.getItem("where");
+
+    const match = {
+      events,
+      startedAt,
+      secondsIn,
+      where,
+      score,
+      positions,
+      teamName,
+      opponentName,
+    };
+
+    localStorage.setItem(key, JSON.stringify(match));
+  };
+
   const finalWhistle = () => {
+    saveScore();
     router.push("/");
   };
 
