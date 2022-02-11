@@ -117,13 +117,13 @@ export default function PositionSelector() {
     } catch (er) {}
 
     const positionsString = localStorage.getItem("pos");
-    let positions = {};
+    let positions: Array<Position> = [];
     try {
       positions = JSON.parse(positionsString);
     } catch (er) {}
 
     const scoreString = localStorage.getItem("score");
-    let score = {};
+    let score: Score = { goals: 0, opponentGoals: 0 };
     try {
       score = JSON.parse(scoreString);
     } catch (er) {}
