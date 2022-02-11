@@ -86,6 +86,10 @@ export default function PositionSelector() {
   };
 
   const kickoff = () => {
+    localStorage.setItem("where", where);
+    localStorage.setItem("opponentName", opponentName);
+    localStorage.setItem("teamName", teamName);
+
     localStorage.setItem("started-at", new Date() + "");
     localStorage.setItem("eventList", "[]");
     localStorage.removeItem("score");

@@ -16,10 +16,17 @@ const toSecs = (display: string): number => {
   return result;
 };
 
+const dateDisplay = (dateString: string): string => {
+  const date = new Date(dateString);
+  return (
+    pad(date.getDate()) + "/" + pad(date.getMonth()) + "/" + date.getFullYear()
+  );
+};
+
 const getSecondsLeft = () => {
   const storedSecsIntoGame = localStorage.getItem("seconds-in");
   const secondsIntoGame = storedSecsIntoGame ? parseInt(storedSecsIntoGame) : 0;
   return secondsIntoGame;
 };
 
-export { timeDisplay, toSecs, getSecondsLeft, pad };
+export { dateDisplay, timeDisplay, toSecs, getSecondsLeft, pad };

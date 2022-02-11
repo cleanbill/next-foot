@@ -5,18 +5,19 @@ import Positions from "../components/positions";
 import PositionInput from "../components/positionInput";
 import { establish } from "../utils/stateHelper";
 import { getSecondsLeft, pad, timeDisplay } from "../utils/timeHelper";
+import { Change, Position } from ".";
+import { EventListItems } from "../components/eventList";
+import { Score } from "./match";
 
-export type Change = {
-  index: number;
-  value: string;
-  cls: string;
-};
-
-export type Position = {
-  id: number;
-  value: string;
-  cls: string;
-  gap: boolean;
+export type MatchData = {
+  events: EventListItems;
+  startedAt: string;
+  secondsIn: string;
+  where: string;
+  score: Score;
+  positions: Array<Position>;
+  teamName: string;
+  opponentName: string;
 };
 
 export default function PositionSelector() {
@@ -130,10 +131,10 @@ export default function PositionSelector() {
     const teamName = localStorage.getItem("teamName");
     const opponentName = localStorage.getItem("opponentName");
     const startedAt = localStorage.getItem("started-at");
-    const secondsIn = localStorage.getItem("started-in");
+    const secondsIn = localStorage.getItem("seconds-in");
     const where = localStorage.getItem("where");
 
-    const match = {
+    const match: MatchData = {
       events,
       startedAt,
       secondsIn,

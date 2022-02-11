@@ -8,6 +8,11 @@ import { establish } from "../utils/stateHelper";
 import { getSecondsLeft, timeDisplay, toSecs } from "../utils/timeHelper";
 import { StateOfTheGame } from "./api/events";
 
+export type Score = {
+  goals: number;
+  opponentGoals: number;
+};
+
 function Match() {
   const dateFormat = new Intl.DateTimeFormat("en-GB", {
     hour: "numeric",
