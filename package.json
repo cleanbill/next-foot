@@ -1,4 +1,8 @@
 {
+  "author": "Mick Carter <cick.marter@gmail.com>",
+  "name": "foot swell",
+  "description": "An app to keep score of kids football",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",

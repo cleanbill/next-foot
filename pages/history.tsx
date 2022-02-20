@@ -9,7 +9,10 @@ export default function History() {
   const [openIndex, setOpenIndex] = useState(-1);
 
   useEffect(() => {
-    if (matches.length == 0 && !empty) {
+    if (matches.length > 0 || empty) {
+      return;
+    }
+    try {
       const keys = Object.keys(localStorage);
       const matchKeys = keys.filter((key) => key.startsWith("MATCH"));
       setEmpty(matchKeys.length == 0);
@@ -27,6 +30,8 @@ export default function History() {
           return match;
         });
       setMatches(matchesStored);
+    } catch (error) {
+      console.log("Failed to get history", error);
     }
   });
 
