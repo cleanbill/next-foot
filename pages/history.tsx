@@ -44,15 +44,15 @@ export default function History() {
   };
 
   const won = (match: MatchData) => {
-    return match.score.goals > match.score.opponentGoals;
+    return match.score?.goals > match.score?.opponentGoals;
   };
 
   const loss = (match: MatchData) => {
-    return match.score.goals < match.score.opponentGoals;
+    return match.score?.goals < match.score?.opponentGoals;
   };
 
   const drew = (match: MatchData) => {
-    return match.score.goals == match.score.opponentGoals;
+    return match.score?.goals == match.score?.opponentGoals;
   };
 
   const total = (oppenentTotal = false): number => {
@@ -61,7 +61,7 @@ export default function History() {
     }
     const totalGoals = matches
       .map((match: MatchData) =>
-        oppenentTotal ? match.score.opponentGoals : match.score.goals
+        oppenentTotal ? match.score?.opponentGoals : match.score?.goals
       )
       .reduce((a, b) => a + b);
     return totalGoals;
@@ -94,16 +94,14 @@ export default function History() {
                 {" "}
                 {match.teamName}{" "}
               </span>
-              <span className="font-bold">{match.score.goals}</span>
+              <span className="font-bold">{match.score?.goals}</span>
               <span className="text-gray-300"> vrs </span>
-              <span className="font-bold">{match.score.opponentGoals}</span>
+              <span className="font-bold">{match.score?.opponentGoals}</span>
               <span className="capitalize"> {match.opponentName} </span>
-              <span className="indent-4">
-                <span className="lowercase">( {match.where}</span>
-                {won(match) && <span> win )</span>}
-                {loss(match) && <span> loss )</span>}
-                {drew(match) && <span> drew )</span>}
-              </span>
+              <span className="lowercase"> {match.where}</span>
+              {won(match) && <span> win</span>}
+              {loss(match) && <span> loss</span>}
+              {drew(match) && <span> drew</span>}
             </div>
             <div className="">
               {openIndex == index && (
@@ -158,7 +156,7 @@ export default function History() {
         }
         .grid {
           display: grid;
-          grid-template-columns: 0fr auto auto 0fr 0fr 1fr 1fr;
+          grid-template-columns: 0fr auto auto 0fr 0fr 1fr 1fr 1fr;
           grid-gap: 5px;
         }
         .sum {
