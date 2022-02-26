@@ -161,7 +161,7 @@ export default function History() {
         }
         .sum {
           display: grid;
-          grid-template-columns: 0fr 0fr 1fr;
+          grid-template-columns: 2fr 0fr 1fr;
 
           grid-gap: 5px;
         }
