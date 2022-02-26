@@ -77,8 +77,7 @@ export default function History() {
             </h1>
             <textarea
               className="min-w-full bg-black text-green-400 p-3"
-              rows="7"
-              column="100"
+              rows={7}
               defaultValue={stored}
               id={index + "-value"}
             ></textarea>
