@@ -19,7 +19,11 @@ const toSecs = (display: string): number => {
 const dateDisplay = (dateString: string): string => {
   const date = new Date(dateString);
   return (
-    pad(date.getDate()) + "/" + pad(date.getMonth()) + "/" + date.getFullYear()
+    pad(date.getDate()) +
+    "/" +
+    pad(date.getMonth() + 1) +
+    "/" +
+    date.getFullYear()
   );
 };
 
