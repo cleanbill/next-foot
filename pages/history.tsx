@@ -25,6 +25,16 @@ export default function History() {
           return JSON.parse(storedString);
         })
         .filter((match) => match != null)
+        .sort((matchA: MatchData, matchB: MatchData): number => {
+          const secsA = new Date(matchA.startedAt).getTime();
+          const secsB = new Date(matchB.startedAt).getTime();
+          if (secsA > secsB) {
+            return -1;
+          } else if (secsB > secsA) {
+            return 1;
+          }
+          return 0;
+        })
         .map((match) => {
           match.startedAt = dateDisplay(match.startedAt);
           return match;
@@ -82,7 +92,7 @@ export default function History() {
       <div className="relative px-6 pt-10 top-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-2xl sm:mx-auto sm:rounded-lg sm:px-10">
         {empty && <div className="text-center text-red-600">NO HISTORY</div>}
         {!empty && (
-          <div className="text-center text-4xl pb-10 text-green-600">
+          <div className="text-center text-4xl pb-7 text-green-600">
             HISTORY
           </div>
         )}
@@ -90,10 +100,7 @@ export default function History() {
           <div key={index}>
             <div className="text-left grid" onClick={() => toggler(index)}>
               <span>{match.startedAt} </span>
-              <span className="capitalize text-gray-500">
-                {" "}
-                {match.teamName}{" "}
-              </span>
+              <span className="capitalize text-gray-500">{match.teamName}</span>
               <span className="font-bold">{match.score?.goals}</span>
               <span className="text-gray-300"> vrs </span>
               <span className="font-bold">{match.score?.opponentGoals}</span>
@@ -141,7 +148,7 @@ export default function History() {
               &larr; Footswell
             </a>
           </p>
-          <p>
+          <p className="text-right">
             <a href="/board" className="text-sky-500 hover:text-sky-600">
               Board &rarr;
             </a>
@@ -151,7 +158,6 @@ export default function History() {
       <style jsx>{`
         .foots {
           display: grid;
-          justify-items: center;
           grid-template-columns: auto auto;
         }
         .grid {
