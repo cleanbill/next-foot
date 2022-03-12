@@ -176,7 +176,7 @@ export default function History() {
       "." +
       ext;
     const type = ext;
-    con = new Blob([data], { type });
+    const file = new Blob([data], { type });
     const a = document.createElement("a");
 
     const url = URL.createObjectURL(file);
