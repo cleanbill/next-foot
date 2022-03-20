@@ -242,6 +242,12 @@ export default function History() {
           <div key={index}>
             <div className="text-left grid" onClick={() => toggler(index)}>
               <span>{match.startedAt} </span>
+              <span className="text-right uppercase">
+                {match.where.substring(0, 1)}
+              </span>
+              {won(match) && <span className="text-right"> W</span>}
+              {loss(match) && <span className="text-right"> L &nbsp;</span>}
+              {drew(match) && <span className="text-right"> D &nbsp;</span>}
               <span className="capitalize text-gray-500">{match.teamName}</span>
               <span className="font-bold">{match.score?.goals}</span>
               <span className="text-gray-300"> vrs </span>
@@ -249,10 +255,6 @@ export default function History() {
               <span className="text-right capitalize">
                 {match.opponentName}
               </span>
-              <span className="text-right lowercase"> {match.where}</span>
-              {won(match) && <span className="text-right"> win</span>}
-              {loss(match) && <span className="text-right"> loss</span>}
-              {drew(match) && <span className="text-right"> drew</span>}
             </div>
             <div className="">
               {openIndex == index && (
@@ -331,25 +333,25 @@ export default function History() {
         )}
 
         {importing && importSize == -1 && (
-          <div className="filer text-sky-500  hover:text-sky-600 justify-items-center">
-            <input
-              type="file"
-              onChange={(e) => readSingleFile(e)}
-              id="file-input"
-            />
-          </div>
+          <span className="doubler">
+            <a
+              onClick={() => setImporting(false)}
+              className="text-sky-500 self-center hover:text-sky-600"
+            >
+              Cancel Import
+            </a>
+            <div className="filer text-sky-500  hover:text-sky-600 justify-items-center">
+              <input
+                type="file"
+                onChange={(e) => readSingleFile(e)}
+                id="file-input"
+              />
+            </div>
+          </span>
         )}
 
         {!importing && (
           <div className="foots pt-8 text-base leading-7 font-semibold">
-            <p>
-              <a
-                href="https://github.com/cleanbill/next-foot"
-                className="text-sky-500 hover:text-sky-600"
-              >
-                &larr; Footswell
-              </a>
-            </p>
             <p className="text-left">
               <a
                 onClick={importHistory}
@@ -358,7 +360,7 @@ export default function History() {
                 <span>Import Storage</span>
               </a>
             </p>
-            <p className="text-right">
+            <p className="text-center">
               <a
                 onClick={exportHistory}
                 className="text-sky-500 hover:text-sky-600"
@@ -382,9 +384,14 @@ export default function History() {
         )}
       </div>
       <style jsx>{`
+        .doubler {
+          display: grid;
+          margin-top: 10px;
+          grid-template-columns: 2fr 2fr;
+        }
         .foots {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-columns: 2fr 2fr 1fr;
         }
         .grid {
           display: grid;
