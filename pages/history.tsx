@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import EventList from "../components/eventList";
 import Foot from "../components/foot";
 import ImportedToast from "../components/importedToast";
-import { download, parseData } from "../utils/porter";
+import {
+  download,
+  generateCSV,
+  generateStorageData,
+  parseData,
+} from "../utils/porter";
 import { dateDisplay } from "../utils/timeHelper";
 import { MatchData } from "./whistle";
 
@@ -77,55 +82,6 @@ export default function History() {
     return match.score?.goals == match.score?.opponentGoals;
   };
 
-  const generateCSV = (): string => {
-    const results = matches.map((match: MatchData, index: number) => {
-      const events = match.events
-        .filter((event) => !event.crossedOut)
-        .map((event) => event.time + "," + event.desc);
-      const outcome = won(match) ? "won" : loss(match) ? "loss" : "drew";
-      const matchCSV =
-        "\n\n****\n\n" +
-        match.startedAt +
-        "," +
-        match.teamName +
-        "," +
-        match.score.goals +
-        ",vrs" +
-        "," +
-        match.score.opponentGoals +
-        "," +
-        match.opponentName +
-        "," +
-        match.where +
-        "," +
-        outcome;
-      const result = matchCSV + ",\n" + events.join(",\n");
-      console.log(index + ". " + result + "\n\n");
-      return result;
-    });
-    return results.join(",");
-  };
-
-  const generateStorageData = (): string => {
-    try {
-      const keys = Object.keys(localStorage);
-      setEmpty(keys.length == 0);
-      const data = {};
-      keys.map((key) => {
-        const storedString = localStorage.getItem(key);
-        if (!storedString) {
-          return null;
-        }
-        data[key] = storedString;
-        return data;
-      });
-      return JSON.stringify(data);
-    } catch (error) {
-      console.log("Failed to get history", error);
-    }
-    return "{}";
-  };
-
   const storeJSON = (data: string) => {
     const { keys, values } = parseData(data);
     keys.forEach((key: string, i) => {
@@ -144,7 +100,10 @@ export default function History() {
 
   const exportHistory = (downloadType: DownloadType) => {
     const ext = downloadType === "CSV" ? "csv" : "json";
-    const data = downloadType === "CSV" ? generateCSV() : generateStorageData();
+    const data =
+      downloadType === "CSV"
+        ? generateCSV(matches, won, loss)
+        : generateStorageData(setEmpty);
     download(data, ext);
   };
 
