@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import EventList from "../components/eventList";
+import Foot from "../components/foot";
+import ImportedToast from "../components/importedToast";
+import { download, parseData } from "../utils/porter";
 import { dateDisplay } from "../utils/timeHelper";
 import { MatchData } from "./whistle";
 
 // NB. @TODO - This page needs breaking down into components
 
+export enum DownloadType {
+  "CSV" = "CSV",
+  "Storage" = "Storage",
+}
+
 export default function History() {
   const [matches, setMatches] = useState([]);
   const [empty, setEmpty] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
-  const [downloadType, setDownloadType] = useState("Storage");
   const [importSize, setImportSize] = useState(-1);
   const [importing, setImporting] = useState(false);
 
@@ -70,14 +77,6 @@ export default function History() {
     return match.score?.goals == match.score?.opponentGoals;
   };
 
-  const toggleDownloadType = () => {
-    if (downloadType == "CSV") {
-      setDownloadType("Storage");
-    } else {
-      setDownloadType("CSV");
-    }
-  };
-
   const generateCSV = (): string => {
     const results = matches.map((match: MatchData, index: number) => {
       const events = match.events
@@ -128,22 +127,12 @@ export default function History() {
   };
 
   const storeJSON = (data: string) => {
-    try {
-      console.log("importing");
-      const storageMap = JSON.parse(data);
-      const keys = Object.keys(storageMap);
-      console.log(keys.length + " items");
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        const value = storageMap[key];
-        window.localStorage.setItem(key, value);
-        setImportSize(i);
-        console.log(i, key, value);
-      }
-    } catch (er) {
-      console.error("Just can't parse", er);
-      console.log(data);
-    }
+    const { keys, values } = parseData(data);
+    keys.forEach((key: string, i) => {
+      window.localStorage.setItem(key, values[i]);
+      setImportSize(i);
+      console.log(i, key, values[i]);
+    });
     setTimeout(function () {
       console.log("imported");
       setImportSize(-1);
@@ -153,41 +142,10 @@ export default function History() {
     }, 3000);
   };
 
-  const exportHistory = () => {
+  const exportHistory = (downloadType: DownloadType) => {
     const ext = downloadType === "CSV" ? "csv" : "json";
     const data = downloadType === "CSV" ? generateCSV() : generateStorageData();
     download(data, ext);
-  };
-
-  const f = (n: number): string => {
-    return n < 9 ? "0" + n : n + "";
-  };
-
-  const download = (data: string, ext = "csv") => {
-    const date = new Date();
-
-    const filename =
-      "matches-" +
-      date.getFullYear() +
-      f(date.getMonth()) +
-      f(date.getDate()) +
-      f(date.getHours()) +
-      f(date.getMinutes()) +
-      "." +
-      ext;
-    const type = ext;
-    const file = new Blob([data], { type });
-    const a = document.createElement("a");
-
-    const url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
   };
 
   const importHistory = () => {
@@ -286,50 +244,7 @@ export default function History() {
           <span> goals</span>
         </div>
         {importSize != -1 && (
-          <span>
-            <br></br>
-            <div
-              className="bg-green-500 shadow-lg mx-auto w-96 max-w-full text-sm pointer-events-auto bg-clip-padding rounded-lg block mb-3"
-              id="static-example"
-              role="alert"
-              aria-live="assertive"
-              aria-atomic="true"
-              data-mdb-autohide="false"
-            >
-              <div className="bg-green-500 flex justify-between items-center py-2 px-3 bg-clip-padding border-b border-green-400 rounded-t-lg">
-                <p className="font-bold text-white flex items-center">
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="check-circle"
-                    className="w-4 h-4 mr-2 fill-current"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
-                    ></path>
-                  </svg>
-                  Imported
-                </p>
-                <div className="flex items-center">
-                  <p className="text-white opacity-90 text-xs">{importSize}</p>
-                  <button
-                    type="button"
-                    className="btn-close btn-close-white box-content w-4 h-4 ml-2 text-white border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-white hover:opacity-75 hover:no-underline"
-                    data-mdb-dismiss="toast"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <div className="p-3 bg-green-500 rounded-b-lg break-words text-white">
-                Data has been imported
-              </div>
-            </div>
-          </span>
+          <ImportedToast importSize={importSize}></ImportedToast>
         )}
 
         {importing && importSize == -1 && (
@@ -351,36 +266,10 @@ export default function History() {
         )}
 
         {!importing && (
-          <div className="foots pt-8 text-base leading-7 font-semibold">
-            <p className="text-left">
-              <a
-                onClick={importHistory}
-                className="text-sky-500 hover:text-sky-600"
-              >
-                <span>Import Storage</span>
-              </a>
-            </p>
-            <p className="text-center">
-              <a
-                onClick={exportHistory}
-                className="text-sky-500 hover:text-sky-600"
-              >
-                Export
-              </a>
-              <a
-                onClick={toggleDownloadType}
-                className="text-sky-500 hover:text-sky-600"
-              >
-                &nbsp;
-                {downloadType}
-              </a>
-            </p>
-            <p className="text-right">
-              <a href="/board" className="text-sky-500 hover:text-sky-600">
-                Board &rarr;
-              </a>
-            </p>
-          </div>
+          <Foot
+            importHistory={importHistory}
+            exportHistory={exportHistory}
+          ></Foot>
         )}
       </div>
       <style jsx>{`
@@ -388,10 +277,6 @@ export default function History() {
           display: grid;
           margin-top: 10px;
           grid-template-columns: 2fr 2fr;
-        }
-        .foots {
-          display: grid;
-          grid-template-columns: 2fr 2fr 1fr;
         }
         .grid {
           display: grid;
