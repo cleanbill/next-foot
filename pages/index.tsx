@@ -114,7 +114,7 @@ export default function PositionSelector() {
   };
 
   return (
-    <>
+    <section className="min-h-screen bg-green-600 text-center absolute w-full ">
       <Head>
        <meta name="description" content="Footswell a site for keeping childrens football" />
         <title>Footswell</title>
@@ -181,6 +181,6 @@ export default function PositionSelector() {
           Next-Foot
         </a>
       </footer>
-    </>
+    </section>
   );
 }
