@@ -12,6 +12,7 @@ export default class Positions extends Component {
           (localPosition, index) =>
             (!localPosition.gap && (
               <button
+                aria-label={"Position switch number "+index}
                 key={index}
                 onClick={() => this.props.onClick(index)}
                 className={

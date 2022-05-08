@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import EventList from "../components/eventList";
-import { dateDisplay } from "../utils/timeHelper";
-import { MatchData } from "./whistle";
 
 export default function History() {
   const [storage, setStorage] = useState([]);
@@ -31,14 +28,6 @@ export default function History() {
       console.log("Failed to get history", error);
     }
   });
-
-  const toggler = (index) => {
-    if (openIndex == index) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
 
   const update = (index: number, key: string) => {
     const textarea = document.getElementById(
