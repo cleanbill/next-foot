@@ -114,10 +114,11 @@ export default function PositionSelector() {
   };
 
   return (
-    <section className="min-h-screen bg-green-600 text-center absolute w-full ">
+    <>
       <Head>
-       <meta name="description" content="Footswell a site for keeping childrens football" />
-        <title>Footswell</title>
+        <meta name="description" content="Footswell a site for keeping childrens football" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'"/>
+                <title>Footswell</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -181,6 +182,6 @@ export default function PositionSelector() {
           Next-Foot
         </a>
       </footer>
-    </section>
+    </>
   );
 }
