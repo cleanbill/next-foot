@@ -52,7 +52,7 @@ function Match() {
     updateScore(opponentName, true);
   };
 
-  let messageClear = null;
+  let messageClear: NodeJS.Timeout | null = null;
   const updateScore = (name: string, opponentGoal = false) => {
     if (messageClear) {
       clearTimeout(messageClear);
@@ -65,7 +65,7 @@ function Match() {
       time: dateFormat.format(new Date()),
       desc: goal,
       goal: true,
-      byOppenent: opponentGoal,
+      byOpponent: opponentGoal,
     };
     const updates = [...eventList, item].sort((a: EventItem, b: EventItem) => {
       const timeA = toSecs(a.time);
@@ -87,8 +87,8 @@ function Match() {
     updateGame(message);
   };
 
-  const getTime = (time = null): string => {
-    if (time != null) {
+  const getTime = (time = ""): string => {
+    if (time.length == 0) {
       return time;
     }
     const secondsIntoGame = getSecondsLeft();
@@ -96,7 +96,7 @@ function Match() {
     return timeText;
   };
 
-  const updateGame = async (mes: string, time = null) => {
+  const updateGame = async (mes: string, time = "") => {
     const timeText = getTime(time);
     const game: StateOfTheGame = {
       message: mes,
@@ -149,7 +149,7 @@ function Match() {
     establish("opponentName", "World", setOpponentName);
     establish("eventList", eventList, setEventList);
     establish("score", { goals: 0, opponentGoals: 0 }, setScore);
-    const gapify = newPos.map((pos) => {
+    const gapify = newPos.map((pos: { gap: boolean; value: string | any[]; }) => {
       pos.gap = pos.value.length == 0;
       return pos;
     });
@@ -193,7 +193,7 @@ function Match() {
             Whistle Blown
           </button>
           <Positions positions={positions} onClick={scorer} />
-          <EventList onChange={adjustScore} eventList={eventList} />
+          <EventList onChange={adjustScore} eventList={eventList} disableUndo={false} />
         </main>
       </div>
       <style jsx>{`

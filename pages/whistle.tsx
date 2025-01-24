@@ -112,26 +112,26 @@ export default function PositionSelector() {
     const eventsString = localStorage.getItem("eventList");
     let events = [];
     try {
-      events = JSON.parse(eventsString);
-    } catch (er) {}
+      events = JSON.parse(eventsString || '{}');
+    } catch (er) { }
 
     const positionsString = localStorage.getItem("pos");
     let positions: Array<Position> = [];
     try {
-      positions = JSON.parse(positionsString);
-    } catch (er) {}
+      positions = JSON.parse(positionsString || '{}');
+    } catch (er) { }
 
     const scoreString = localStorage.getItem("score");
     let score: Score = { goals: 0, opponentGoals: 0 };
     try {
-      score = JSON.parse(scoreString);
-    } catch (er) {}
+      score = JSON.parse(scoreString || '{}');
+    } catch (er) { }
 
-    const teamName = localStorage.getItem("teamName");
-    const opponentName = localStorage.getItem("opponentName");
-    const startedAt = localStorage.getItem("started-at");
-    const secondsIn = localStorage.getItem("seconds-in");
-    const where = localStorage.getItem("where");
+    const teamName = localStorage.getItem("teamName") || "";
+    const opponentName = localStorage.getItem("opponentName") || "";
+    const startedAt = localStorage.getItem("started-at") || "";
+    const secondsIn = localStorage.getItem("seconds-in") || "";
+    const where = localStorage.getItem("where") || "";
 
     const match: MatchData = {
       events,

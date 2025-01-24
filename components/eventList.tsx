@@ -3,6 +3,7 @@ import { Component, useState } from "react";
 export interface EventListState {
   eventList: EventListItems;
   disableUndo: boolean;
+  onChange?: Function
 }
 
 export interface EventItem {
@@ -10,16 +11,16 @@ export interface EventItem {
   time: string;
   desc: string;
   goal: boolean;
-  byOppenent: boolean;
+  byOpponent: boolean;
 }
 
-export interface EventListItems extends Array<EventItem> {}
+export interface EventListItems extends Array<EventItem> { }
 
 export default class EventList extends Component<
   EventListState,
   EventListState
 > {
-  constructor(public props) {
+  constructor(props: EventListState | Readonly<EventListState>) {
     super(props);
     this.state = {
       eventList: this.props.eventList,
@@ -42,11 +43,13 @@ export default class EventList extends Component<
       return item;
     }
     console.log("Send update");
-    this.props.onChange(decrement, item.byOppenent);
+    if (this.props.onChange) {
+      this.props.onChange(decrement, item.byOpponent);
+    }
     return item;
   }
 
-  private updateItem(item: EventItem, checkIndex, index): EventItem {
+  private updateItem(item: EventItem, checkIndex: number, index: number): EventItem {
     if (checkIndex != index) {
       return item;
     }

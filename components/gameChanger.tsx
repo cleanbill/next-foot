@@ -6,7 +6,7 @@ export interface PollingEventListProp {
 }
 
 export default class GameChanger extends Component<PollingEventListProp> {
-  private interval = null;
+  private interval: NodeJS.Timer | undefined;
 
   constructor(props: PollingEventListProp) {
     super(props);

@@ -11,12 +11,12 @@ export interface ClockState {
 }
 
 export default class Clock extends Component<ClockProp, ClockState> {
-  private interval = null;
+  private interval: NodeJS.Timer | undefined;
 
   constructor(props: ClockProp) {
     super(props);
     this.state = {
-      start: null,
+      start: new Date(),
       current: "00:00",
     };
   }

@@ -107,8 +107,8 @@ export default function PositionSelector() {
     updatePos([{ index, value, cls: "" }]);
   };
 
-  const nameChange = (key: string, event: Event, setter: Function) => {
-    const value = (event.target as HTMLInputElement).value;
+  const nameChange = (key: string, event: Event | undefined, setter: Function) => {
+    const value = (event?.target as HTMLInputElement).value;
     localStorage.setItem(key, value);
     setter(value);
   };
@@ -116,11 +116,11 @@ export default function PositionSelector() {
   return (
     <>
       <Head>
-        <meta name="description" content="Footswell a site for keeping childrens football" />
-        <meta http-equiv="Content-Security-Policy" 
-              content="default-src 'none'; script-src 'self' 'unsafe-eval'; connect-src vitals.vercel-insights.com 'self'; img-src 'self'; 
+        <meta name="description" content="Footswell a site for keeping children's football" />
+        <meta http-equiv="Content-Security-Policy"
+          content="default-src 'none'; script-src 'self' 'unsafe-eval'; connect-src vitals.vercel-insights.com 'self'; img-src 'self'; 
                        style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'"/>
-                <title>Footswell</title>
+        <title>Footswell</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

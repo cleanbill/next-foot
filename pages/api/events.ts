@@ -1,3 +1,4 @@
+import { NextRequest, NextResponse } from "next/server";
 import { EventItem } from "../../components/eventList";
 
 export interface StateOfTheGame {
@@ -32,11 +33,12 @@ const log = (message: string, state = 'normal') => {
     }
 }
 
-export default function handler(req, res) {
+export default function handler(req: any, res: any) {
     log("Incoming " + req.method + " events request");
     if (req.method == 'GET') {
         log("   Getting events " + cache.timeDisplay);
-        res.status(200).json(cache);
+        res.
+            res.status(200).json(cache);
         return;
     }
     if (req.method == 'POST') {

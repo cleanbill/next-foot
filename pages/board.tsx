@@ -1,10 +1,10 @@
 import { useState } from "react";
-import EventList from "../components/eventList";
+import EventList, { EventItem } from "../components/eventList";
 import GameChanger from "../components/gameChanger";
 import { StateOfTheGame } from "./api/events";
 
 function Board() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(Array<EventItem>);
   const [goals, setGoals] = useState(0);
   const [message, setMessage] = useState("");
   const [opponentGoal, setOpponentGoals] = useState(0);
@@ -71,7 +71,7 @@ function Board() {
       </div>
       <GameChanger onGameChanged={(game: StateOfTheGame) => updated(game)} />
 
-      <style jsx>{`
+      {/* <style jsx>{`
         .block {
           display: block;
           font-size: 15px;
@@ -87,7 +87,7 @@ function Board() {
           width: 100%;
           font-size: 30px;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 }

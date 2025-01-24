@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export default function History() {
-  const [storage, setStorage] = useState([]);
-  const [keys, setKeys] = useState([]);
+  const [storage, setStorage] = useState(Array<string>);
+  const [keys, setKeys] = useState(Array<string>);
   const [empty, setEmpty] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
 

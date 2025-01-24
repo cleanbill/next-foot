@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import EventList from "../components/eventList";
 import Foot from "../components/foot";
 import ImportedToast from "../components/importedToast";
@@ -19,7 +19,7 @@ export enum DownloadType {
 }
 
 export default function History() {
-  const [matches, setMatches] = useState([]);
+  const [matches, setMatches] = useState(Array<MatchData>);
   const [empty, setEmpty] = useState(false);
   const [openIndex, setOpenIndex] = useState(-1);
   const [importSize, setImportSize] = useState(-1);
@@ -62,7 +62,7 @@ export default function History() {
     }
   });
 
-  const toggler = (index) => {
+  const toggler = (index: SetStateAction<number>) => {
     if (openIndex == index) {
       setOpenIndex(-1);
     } else {
@@ -83,8 +83,8 @@ export default function History() {
   };
 
   const storeJSON = (data: string) => {
-    const { keys, values } = parseData(data);
-    keys.forEach((key: string, i) => {
+    const { keys, values } = parseData(data) || { keys: [], values: [] };
+    keys.forEach((key: string, i: number) => {
       window.localStorage.setItem(key, values[i]);
       setImportSize(i);
       console.log(i, key, values[i]);
@@ -111,26 +111,34 @@ export default function History() {
     setImporting(true);
   };
 
-  const readSingleFile = (e) => {
+  type FileInputChangeEvent = ChangeEvent<HTMLInputElement>;
+
+  const readSingleFile = (e: FileInputChangeEvent) => {
+    if (!e.target.files) {
+      return;
+    }
     const file = e.target.files[0];
     if (!file) {
       return;
     }
     const reader = new FileReader();
     reader.onload = function (e) {
+      if (!e.target) {
+        return;
+      }
       const contents = e.target.result;
       storeJSON(contents + "");
     };
     reader.readAsText(file);
   };
 
-  const total = (oppenentTotal = false): number => {
+  const total = (opponentTotal = false): number => {
     if (matches.length == 0) {
       return 0;
     }
     const totalGoals = matches
       .map((match: MatchData) =>
-        oppenentTotal ? match.score?.opponentGoals : match.score?.goals
+        opponentTotal ? match.score?.opponentGoals : match.score?.goals
       )
       .reduce((a, b) => a + b);
     return totalGoals;
@@ -177,7 +185,7 @@ export default function History() {
               {openIndex == index && (
                 <div className="indent-3">
                   <br />
-                  <EventList disableUndo="true" eventList={match.events} />
+                  <EventList disableUndo={true} eventList={match.events} />
                 </div>
               )}
             </div>
